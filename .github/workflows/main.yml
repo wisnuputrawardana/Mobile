@@ -1,0 +1,28 @@
+name: push
+on:
+ push:
+   branches: [ master ]
+jobs:
+ lint-staticChecks-test-build:
+   if: startsWith(github.head_ref, 'task/')
+   runs-on: ubuntu-latest
+   permissions:
+     contents: read
+     packages: write
+   steps:
+     - name: Checkout the code from Repo
+       uses: actions/checkout@v2
+     - name: Setup JDK 11.
+       uses: ./.github/mini_flows/s2_setup_jdk
+     - name: Mandatory File Changes
+       uses: ./.github/mini_flows/s1_mandatory_filechanges
+     - name: Run lint tests and Upload results
+       uses: ./.github/mini_flows/s3_lint
+     - name: Static Code Check Via detekt
+       uses: ./.github/mini_flows/s4_detekt
+     - name: Static Code Check Via checkstyle
+       uses: ./.github/mini_flows/s5_checkstyle
+     - name: Unit Tests (DEBUG AND RELEASE)
+       uses: ./.github/mini_flows/s6_test
+     - name: Build Code
+       uses: ./.github/mini_flows/s7_build
