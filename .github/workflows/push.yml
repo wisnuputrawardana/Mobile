@@ -1,0 +1,23 @@
+on: 
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Test with Gradle
+        run: ./gradlew test
+      - name: Deploy to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.0
+        with:
+          app_id: <your-firebase-app-id>
+          token: ${{ secrets.FIREBASE_TOKEN }}
