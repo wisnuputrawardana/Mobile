@@ -2,6 +2,7 @@ name: push
 on:
  push:
    branches: [ master ]
+ workflow_dispatch:
 jobs:
  lint-staticChecks-test-build:
    if: startsWith(github.head_ref, 'task/')

@@ -22,7 +22,7 @@ class Main1Activity : AppCompatActivity() {
 
 
         val btn = findViewById<Button>(R.id.btn)
-
+        val textView = findViewById<TextView>(R.id.text)
 
         btn.setOnClickListener{
             var textauto = autoComp.text.toString()
